@@ -9,6 +9,8 @@ import {
 
 
 import crtaCertImage from './assets/CRTA-Cert.jpg';
+
+
 import bashLogo from './assets/Bash.png';
 import burpSuiteLogo from './assets/Burp Suite.png';
 import kaliLinuxLogo from './assets/Kali Linux.png';
@@ -761,6 +763,15 @@ export default function App() {
             document.head.appendChild(metaDescription);
         }
         metaDescription.content = "Hire Akshat Parikh, a freelance penetration tester (CRTA). Expert web, network, and API security services at affordable rates. Secure your business with a free consultation.";
+
+        // Add Google Site Verification Meta Tag
+        let googleVerification = document.querySelector('meta[name="google-site-verification"]');
+        if (!googleVerification) {
+            googleVerification = document.createElement('meta');
+            googleVerification.name = 'google-site-verification';
+            document.head.appendChild(googleVerification);
+        }
+        googleVerification.content = "F_dCEiRam1Sa-k7DPGjaKwCvGnKS8Vy4ZCJp0Z8ggC4";
 
     }, []);
 
