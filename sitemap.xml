@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<!-- Main Homepage -->
+
+<url>
+<loc>https://akshatsecurity.com/</loc>
+<lastmod>2025-10-19</lastmod>
+<priority>1.00</priority>
+</url>
+
+<!-- Service Section -->
+
+<url>
+<loc>https://akshatsecurity.com/#services</loc>
+<lastmod>2025-10-19</lastmod>
+<priority>0.90</priority>
+</url>
+
+<!-- Process Section -->
+
+<url>
+<loc>https://akshatsecurity.com/#process</loc>
+<lastmod>2025-10-19</lastmod>
+<priority>0.80</priority>
+</url>
+
+<!-- Experience Section -->
+
+<url>
+<loc>https://akshatsecurity.com/#experience</loc>
+<lastmod>2025-10-19</lastmod>
+<priority>0.80</priority>
+</url>
+
+<!-- Certifications Section -->
+
+<url>
+<loc>https://akshatsecurity.com/#certifications</loc>
+<lastmod>2025-10-19</lastmod>
+<priority>0.80</priority>
+</url>
+
+<!-- Achievements Section -->
+
+<url>
+<loc>https://akshatsecurity.com/#achievements</loc>
+<lastmod>2025-10-19</lastmod>
+<priority>0.80</priority>
+</url>
+
+<!-- FAQs Section -->
+
+<url>
+<loc>https://akshatsecurity.com/#faqs</loc>
+<lastmod>2025-10-19</lastmod>
+<priority>0.70</priority>
+</url>
+
+<!-- Contact Section -->
+
+<url>
+<loc>https://akshatsecurity.com/#contact</loc>
+<lastmod>2025-10-19</lastmod>
+<priority>0.90</priority>
+</url>
+
+</urlset>
