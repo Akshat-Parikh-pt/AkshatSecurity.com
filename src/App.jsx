@@ -9,8 +9,6 @@ import {
 
 
 import crtaCertImage from './assets/CRTA-Cert.jpg';
-
-
 import bashLogo from './assets/Bash.png';
 import burpSuiteLogo from './assets/Burp Suite.png';
 import kaliLinuxLogo from './assets/Kali Linux.png';
@@ -25,9 +23,6 @@ import awsLogo from './assets/AWS.png';
 import hashcatLogo from './assets/Hashcat.png';
 import powershellLogo from './assets/PowerShell.png';
 import tryhackmeLogo from './assets/tryhackme-logo.png';
-
-
-
 const tryhackmeLogoPng = tryhackmeLogo;
 
 
@@ -649,6 +644,20 @@ const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thi
 };
 
 const PrivacyPolicyModal = ({ onClose }) => {
+    // Helper Component to render an obfuscated email link, protecting it from spam bots.
+    const ObfuscatedEmailLink = () => {
+        const [email, setEmail] = useState('');
+        useEffect(() => {
+            const user = 'akshatparikh.pt';
+            const domain = 'gmail.com';
+            setEmail(`${user}@${domain}`);
+        }, []);
+
+        if (!email) return null;
+
+        return <a href={`mailto:${email}`} className="accent-green hover:underline">{email}</a>;
+    };
+
     return (
         <div className="privacy-modal-overlay" onClick={onClose}>
             <div className="privacy-modal-content" onClick={(e) => e.stopPropagation()}>
@@ -714,7 +723,7 @@ const PrivacyPolicyModal = ({ onClose }) => {
                     <div>
                         <h3 className="text-xl font-bold mb-2 text-text-primary">7. Contact</h3>
                         <p>If you have any questions about this Privacy Policy or how we handle your data, please contact us at:</p>
-                        <p className="mt-2">Email: <a href="mailto:akshatparikh.pt@gmail.com" className="accent-green hover:underline">akshatparikh.pt@gmail.com</a></p>
+                        <p className="mt-2">Email: <ObfuscatedEmailLink /></p>
                     </div>
                     <div>
                         <h3 className="text-xl font-bold mb-2 text-text-primary">8. Changes</h3>
@@ -728,6 +737,20 @@ const PrivacyPolicyModal = ({ onClose }) => {
             </div>
         </div>
     );
+};
+
+// Helper Component to render an obfuscated email link, protecting it from spam bots.
+const ObfuscatedEmailLink = ({ className = "text-text-secondary hover:text-white text-sm" }) => {
+    const [email, setEmail] = useState('');
+    useEffect(() => {
+        const user = 'akshatparikh.pt';
+        const domain = 'gmail.com';
+        setEmail(`${user}@${domain}`);
+    }, []);
+
+    if (!email) return null;
+
+    return <a href={`mailto:${email}`} className={className}>{email}</a>;
 };
 
 
@@ -752,34 +775,55 @@ export default function App() {
         contact: useRef(null),
     };
 
-    // SEO Effect
+    // SEO, Meta Tags, and Performance Effect
     useEffect(() => {
+        // --- STANDARD META TAGS ---
         document.title = "Akshat Parikh - Penetration Testing Services";
         
-        let metaDescription = document.querySelector('meta[name="description"]');
-        if (!metaDescription) {
-            metaDescription = document.createElement('meta');
-            metaDescription.name = 'description';
-            document.head.appendChild(metaDescription);
-        }
-        metaDescription.content = "Hire Akshat Parikh, a freelance penetration tester (CRTA). Expert web, network, and API security services at affordable rates. Secure your business with a free consultation.";
+        const metaDescription = document.querySelector('meta[name="description"]') || document.createElement('meta');
+        metaDescription.name = 'description';
+        metaDescription.content = "Hire Akshat Parikh, a freelance Penetration Tester & Security Consultant. Expert web, network, and cloud security services at affordable rates. Secure your business today.";
+        if (!metaDescription.parentNode) document.head.appendChild(metaDescription);
 
-        // Add Google Site Verification Meta Tag
-        let googleVerification = document.querySelector('meta[name="google-site-verification"]');
-        if (!googleVerification) {
-            googleVerification = document.createElement('meta');
-            googleVerification.name = 'google-site-verification';
-            document.head.appendChild(googleVerification);
-        }
+        const googleVerification = document.querySelector('meta[name="google-site-verification"]') || document.createElement('meta');
+        googleVerification.name = 'google-site-verification';
         googleVerification.content = "F_dCEiRam1Sa-k7DPGjaKwCvGnKS8Vy4ZCJp0Z8ggC4";
+        if (!googleVerification.parentNode) document.head.appendChild(googleVerification);
+        
+        // --- SOCIAL MEDIA META TAGS ---
+        const socialTags = [
+            { property: 'og:title', content: 'Akshat Parikh - Penetration Testing Services' },
+            { property: 'og:description', content: 'Expert penetration tester providing web, network, and cloud security services to businesses worldwide.' },
+            { property: 'og:image', content: 'https://akshatsecurity.com/social-preview.png' }, // IMPORTANT: Create a 1200x630px image and place it in your /public folder
+            { property: 'og:url', content: 'https://akshatsecurity.com' },
+            { property: 'og:type', content: 'website' },
+            { name: 'twitter:card', content: 'summary_large_image' },
+            { name: 'twitter:title', content: 'Akshat Parikh - Penetration Testing Services' },
+            { name: 'twitter:description', content: 'Expert penetration tester providing web, network, and cloud security services to businesses worldwide.' },
+            { name: 'twitter:image', content: 'https://akshatsecurity.com/social-preview.png' } // This can be the same image as og:image
+        ];
 
-    }, []);
+        socialTags.forEach(tagInfo => {
+            const selector = tagInfo.property ? `meta[property="${tagInfo.property}"]` : `meta[name="${tagInfo.name}"]`;
+            let metaTag = document.querySelector(selector) || document.createElement('meta');
+            if (tagInfo.property) {
+                metaTag.setAttribute('property', tagInfo.property);
+            } else {
+                metaTag.setAttribute('name', tagInfo.name);
+            }
+            metaTag.content = tagInfo.content;
+            if (!metaTag.parentNode) document.head.appendChild(metaTag);
+        });
 
-    useEffect(() => {
+
+        // --- PERFORMANCE: NON-BLOCKING SCRIPT LOADING ---
+        // Defer TailwindCSS to make it non-render-blocking
         const tailwindScript = document.createElement('script');
         tailwindScript.src = 'https://cdn.tailwindcss.com';
+        tailwindScript.defer = true;
         document.head.appendChild(tailwindScript);
        
+        // Preconnect to Google Fonts for faster loading
         const fontLinkPreconnect1 = document.createElement('link');
         fontLinkPreconnect1.rel = 'preconnect';
         fontLinkPreconnect1.href = 'https://fonts.googleapis.com';
@@ -787,19 +831,61 @@ export default function App() {
         fontLinkPreconnect2.rel = 'preconnect';
         fontLinkPreconnect2.href = 'https://fonts.gstatic.com';
         fontLinkPreconnect2.crossOrigin = "true";
-        const fontLink = document.createElement('link');
-        fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap';
-        fontLink.rel = 'stylesheet';
         document.head.appendChild(fontLinkPreconnect1);
         document.head.appendChild(fontLinkPreconnect2);
+        
+        // Load Google Fonts asynchronously to prevent render-blocking
+        const fontLink = document.createElement('link');
+        fontLink.rel = 'preload';
+        fontLink.as = 'style';
+        fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap';
+        fontLink.onload = () => { fontLink.rel = 'stylesheet'; };
         document.head.appendChild(fontLink);
+        
         return () => {
+            // Basic cleanup to prevent memory leaks in a complex SPA, though less critical here.
             document.head.removeChild(tailwindScript);
             document.head.removeChild(fontLinkPreconnect1);
             document.head.removeChild(fontLinkPreconnect2);
             document.head.removeChild(fontLink);
         };
     }, []);
+
+    // Google Analytics Effect
+    useEffect(() => {
+        // Your actual Measurement ID has been added here.
+        const measurementId = 'G-HN1LW8RSJF'; 
+        
+        // Avoid adding the script multiple times during development hot-reloads
+        if (document.querySelector(`script[src*="${measurementId}"]`)) {
+            return;
+        }
+
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+        document.head.appendChild(gaScript);
+
+        const gaScriptInit = document.createElement('script');
+        gaScriptInit.innerHTML = `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${measurementId}');
+        `;
+        document.head.appendChild(gaScriptInit);
+
+        // Cleanup function to remove scripts if the component unmounts
+        return () => {
+            if (document.head.contains(gaScript)) {
+                document.head.removeChild(gaScript);
+            }
+            if (document.head.contains(gaScriptInit)) {
+                document.head.removeChild(gaScriptInit);
+            }
+        };
+    }, []);
+
 
     useEffect(() => {
         const revealObserver = new IntersectionObserver((entries) => {
@@ -1686,7 +1772,7 @@ export default function App() {
                      <div className="container mx-auto px-6">
                         <div className="text-center mb-12 reveal"><h2 className="text-4xl font-bold">Ready to Secure <span className="accent-green">Your Business?</span></h2><p className="mt-4 max-w-2xl mx-auto text-text-secondary">Let's talk. Contact me today for a free, no-obligation consultation to discuss your security needs.</p></div>
                         <div className="grid lg:grid-cols-2 gap-8">
-                            <div className="styled-card p-8 rounded-lg reveal"><h3 className="text-xl font-bold mb-4">Connect With Me</h3><p className="text-text-secondary mb-6">Multiple ways to reach out and connect professionally.</p><div className="space-y-6"><div className="icon-hover-effect-container flex items-center space-x-4"><div className="footer-icon icon-hover-effect"><Mail className="w-6 h-6" /></div><div><h4 className="font-semibold">Email</h4><a href="mailto:akshatparikh.pt@gmail.com" className="text-text-secondary hover:text-white text-sm">akshatparikh.pt@gmail.com</a></div></div><div className="icon-hover-effect-container flex items-center space-x-4"><div className="footer-icon icon-hover-effect"><Linkedin className="w-6 h-6" /></div><div><h4 className="font-semibold">LinkedIn</h4><a href="https://www.linkedin.com/in/akshatparikh-pt/" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-white text-sm">linkedin.com/in/akshatparikh-pt/</a></div></div><div className="icon-hover-effect-container flex items-center space-x-4"><div className="footer-icon icon-hover-effect"><img src={tryhackmeLogoPng} alt="TryHackMe" className="w-6 h-6" /></div><div><h4 className="font-semibold">TryHackMe</h4><a href="https://tryhackme.com/p/SN1PER" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-white text-sm">tryhackme.com/p/SN1PER</a></div></div><div className="icon-hover-effect-container flex items-center space-x-4"><div className="footer-icon icon-hover-effect"><Box className="w-6 h-6" /></div><div><h4 className="font-semibold">HackTheBox</h4><a href="https://app.hackthebox.com/users/475852" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-white text-sm">app.hackthebox.com/users/SN1PERZ</a></div></div></div></div>
+                            <div className="styled-card p-8 rounded-lg reveal"><h3 className="text-xl font-bold mb-4">Connect With Me</h3><p className="text-text-secondary mb-6">Multiple ways to reach out and connect professionally.</p><div className="space-y-6"><div className="icon-hover-effect-container flex items-center space-x-4"><div className="footer-icon icon-hover-effect"><Mail className="w-6 h-6" /></div><div><h4 className="font-semibold">Email</h4><ObfuscatedEmailLink /></div></div><div className="icon-hover-effect-container flex items-center space-x-4"><div className="footer-icon icon-hover-effect"><Linkedin className="w-6 h-6" /></div><div><h4 className="font-semibold">LinkedIn</h4><a href="https://www.linkedin.com/in/akshatparikh-pt/" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-white text-sm">linkedin.com/in/akshatparikh-pt/</a></div></div><div className="icon-hover-effect-container flex items-center space-x-4"><div className="footer-icon icon-hover-effect"><img src={tryhackmeLogoPng} alt="TryHackMe" className="w-6 h-6" /></div><div><h4 className="font-semibold">TryHackMe</h4><a href="https://tryhackme.com/p/SN1PER" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-white text-sm">tryhackme.com/p/SN1PER</a></div></div><div className="icon-hover-effect-container flex items-center space-x-4"><div className="footer-icon icon-hover-effect"><Box className="w-6 h-6" /></div><div><h4 className="font-semibold">HackTheBox</h4><a href="https://app.hackthebox.com/users/475852" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-white text-sm">app.hackthebox.com/users/SN1PERZ</a></div></div></div></div>
                             <div className="styled-card p-8 rounded-lg reveal flex flex-col">
                                 <h3 className="text-xl font-bold mb-4">Send a Message for a Free Consultation</h3>
                                 <form onSubmit={handleContactSubmit} className="space-y-4">
