@@ -789,6 +789,14 @@ export default function App() {
         googleVerification.name = 'google-site-verification';
         googleVerification.content = "F_dCEiRam1Sa-k7DPGjaKwCvGnKS8Vy4ZCJp0Z8ggC4";
         if (!googleVerification.parentNode) document.head.appendChild(googleVerification);
+
+        // --- CANONICAL TAG (FIX) ---
+        // This tells Google the preferred URL for your site, fixing the "Duplicate without user-selected canonical" error.
+        const canonicalLink = document.querySelector('link[rel="canonical"]') || document.createElement('link');
+        canonicalLink.rel = 'canonical';
+        canonicalLink.href = 'https://akshatsecurity.com/'; // Set to your main URL from the sitemap
+        if (!canonicalLink.parentNode) document.head.appendChild(canonicalLink);
+        // --- END CANONICAL TAG ---
         
         // --- SOCIAL MEDIA META TAGS ---
         const socialTags = [
@@ -844,10 +852,12 @@ export default function App() {
         
         return () => {
             // Basic cleanup to prevent memory leaks in a complex SPA, though less critical here.
-            document.head.removeChild(tailwindScript);
-            document.head.removeChild(fontLinkPreconnect1);
-            document.head.removeChild(fontLinkPreconnect2);
-            document.head.removeChild(fontLink);
+            if (document.head.contains(tailwindScript)) document.head.removeChild(tailwindScript);
+            if (document.head.contains(fontLinkPreconnect1)) document.head.removeChild(fontLinkPreconnect1);
+            if (document.head.contains(fontLinkPreconnect2)) document.head.removeChild(fontLinkPreconnect2);
+            if (document.head.contains(fontLink)) document.head.removeChild(fontLink);
+            // Cleanup the canonical link
+            if (document.head.contains(canonicalLink)) document.head.removeChild(canonicalLink);
         };
     }, []);
 
@@ -1106,7 +1116,7 @@ export default function App() {
                 </nav>
             </header>
 
-            <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden fixed top-0 left-0 w-full h-full bg-[var(--dark-bg)] z-40 pt-20`}>
+            <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden fixed top-0 left-0 w-full h-full bg-[var(--dark-bg)] z-40 pt-16`}>
                 <div className="container mx-auto px-6 py-4 flex flex-col items-center space-y-4">
                     {navItems.map(item => (
                         <a key={item} href={`#${item.toLowerCase()}`} onClick={(e) => handleNavLinkClick(e, item.toLowerCase())} className="text-lg text-[var(--text-primary)] hover:text-[var(--primary-green)] capitalize">
@@ -1119,13 +1129,13 @@ export default function App() {
             <main>
                 <section id="home" ref={sectionRefs.home} className="min-h-screen flex flex-col items-center justify-start px-6 relative overflow-hidden">
                     <canvas id="hero-bg" ref={canvasRef}></canvas>
-                    <div className="flex-grow flex flex-col justify-center items-center pt-20 pb-6 relative z-10 w-full">
+                    <div className="flex-grow flex flex-col justify-center items-center pt-16 pb-6 relative z-10 w-full">
                         <div id="hero-content" className="w-full max-w-screen-2xl mx-auto px-4">
                             <div className="grid md:grid-cols-5 gap-8 items-center">
                                 <div className="md:col-span-3 text-center md:text-left md:-mt-4">
                                     <h1 className="text-5xl md:text-7xl font-bold fade-in-up reveal"><span className="accent-green">Akshat Parikh</span></h1>
                                     <p className="mt-4 text-xl md:text-2xl text-text-secondary fade-in-up reveal delay-1">Penetration Tester & Security Consultant</p>
-                                    <p className="mt-6 text-text-secondary md:text-lg fade-in-up reveal delay-2">With over a year of hands-on experience in penetration testing and vulnerability assessment, I specialize in identifying and exploiting security flaws in web applications, networks, and systems to empower organizations to build resilient, secure, and defensible digital ecosystems. With a strong foundation in offensive security methodologies and a deep understanding of modern threat landscapes, I deliver comprehensive security assessments that go beyond automated scans.</p>
+                                    <p className="mt-6 text-text-secondary md:text-lg fade-in-up reveal delay-2">With over a year of hands-on experience in professional penetration testing, I specialize in securing web applications, networks, and cloud infrastructure. My approach is built on a strong foundation in offensive security, simulating the same tactics real-world attackers use to uncover critical risks. I deliver comprehensive security assessments that go far beyond automated scans. My engagement concludes with a professional, actionable report, detailing prioritized vulnerabilities and providing clear remediation guidance to help your team secure your assets and protect customer data.</p>
                                 </div>
                                 <div className="hidden md:col-span-2 md:flex justify-center p-4">
                                     <div className="flex flex-col items-center gap-2 reveal delay-3 md:ml-16">
@@ -1177,9 +1187,9 @@ export default function App() {
                         </div>
 
                         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl mx-auto fade-in-up reveal delay-3">
-                            <div className="text-center"><p className="text-3xl font-bold accent-green">1+</p><p className="text-text-secondary">Years Experience</p></div>
+                            <div className="text-center"><p className="text-3xl font-bold accent-green">Web & Network</p><p className="text-text-secondary">Security Expert</p></div>
                             <div className="text-center"><p className="text-3xl font-bold accent-green">Top 0.1%</p><p className="text-text-secondary">TryHackMe Rank</p></div>
-                            <div className="text-center"><p className="text-3xl font-bold accent-green">Pro Hacker</p><p className="text-text-secondary">HackTheBox Rank</p></div>
+                            <div className="text-center"><p className="text-3xl font-bold accent-green">CRTA Certified</p><p className="text-text-secondary">Verified Red Team Analyst</p></div>
                         </div>
                        
                         <div className="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 fade-in-up reveal delay-4 w-full">
