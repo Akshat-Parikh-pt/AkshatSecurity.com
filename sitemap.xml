@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<urlset xmlns="[suspicious link removed]">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <!-- Main Homepage -->
 
@@ -18,13 +18,14 @@
 <priority>0.90</priority>
 </url>
 
-<!-- About Section (NEW) -->
+<!-- About Section -->
 
 <url>
-<loc>https://akshatsecurity.com/%23about</loc>
+<loc>https://akshatsecurity.com/#About</loc>
 <lastmod>2025-11-08</lastmod>
-<priority>0.80</priority>
+<priority>0.90</priority>
 </url>
+
 
 <!-- Process Section -->
 
@@ -62,7 +63,7 @@
 
 <url>
 <loc>https://akshatsecurity.com/#faqs</loc>
-<lastmod>2Gallery-11-08</lastmod>
+<lastmod>2025-11-08</lastmod>
 <priority>0.70</priority>
 </url>
 
