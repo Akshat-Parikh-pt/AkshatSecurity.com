@@ -23,6 +23,9 @@ import awsLogo from './assets/AWS.png';
 import hashcatLogo from './assets/Hashcat.png';
 import powershellLogo from './assets/PowerShell.png';
 import tryhackmeLogo from './assets/tryhackme-logo.png';
+import opalLogo from './assets/Opal logo.png'; // <-- UNCOMMENT THIS FOR LOCAL
+import mcsLogo from './assets/MCS logo.jpg';   // <-- UNCOMMENT THIS FOR LOCAL
+import akshatPhotoJpg from './assets/Akshat Photo.jpg'; // <-- UNCOMMENT THIS FOR LOCAL
 const tryhackmeLogoPng = tryhackmeLogo;
 
 
@@ -88,7 +91,11 @@ const GlobalStyles = () => (
             text-shadow: 0 0 8px var(--glow-color);
         }
         #header {
-            background-color: var(--dark-bg);
+            /* Updated for glassmorphism effect */
+            background-color: rgba(17, 19, 25, 0.85); /* Semi-transparent version of var(--dark-bg) */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px); /* For Safari compatibility */
+            
             border-bottom: 1px solid var(--border-color);
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
@@ -453,6 +460,33 @@ const GlobalStyles = () => (
             box-shadow: 0 0 15px var(--soft-glow-color);
         }
 
+        /* --- NEW PHOTO FRAME CSS --- */
+        .photo-frame {
+            position: relative;
+            width: 320px; /* w-80 */
+            height: 384px; /* h-96 */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 2px;
+            /* Creates a subtle gradient border */
+            background: linear-gradient(145deg, var(--border-color), var(--card-bg));
+            box-shadow: 0 0 15px var(--soft-glow-color);
+            transition: all 0.3s ease;
+        }
+        .photo-frame:hover {
+            /* Glows with primary color on hover */
+            background: linear-gradient(145deg, var(--primary-green), var(--border-color));
+            box-shadow: 0 0 25px var(--glow-color);
+        }
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures your vertical photo fits perfectly */
+            border-radius: 0.375rem; /* rounded-md, slightly smaller than frame */
+            /* This inner border creates a clean separation from the frame */
+            border: 2px solid var(--dark-bg); 
+        }
+        /* --- END PHOTO FRAME CSS --- */
+
 
         @keyframes scroll {
             to {
@@ -767,6 +801,7 @@ export default function App() {
     const sectionRefs = {
         home: useRef(null),
         services: useRef(null),
+        about: useRef(null), // <-- ADDED
         process: useRef(null),
         experience: useRef(null),
         certifications: useRef(null),
@@ -1070,7 +1105,7 @@ export default function App() {
         setTimeout(() => setShowToast(false), 4000);
     };
    
-    const navItems = ['home', 'services', 'process', 'experience', 'certifications', 'achievements', 'FAQs', 'contact'];
+    const navItems = ['home', 'services', 'about', 'process', 'experience', 'certifications', 'achievements', 'FAQs', 'contact']; // <-- 'about' ADDED
 
     const logos = [
         { name: 'Burp Suite', src: burpSuiteLogo },
@@ -1133,9 +1168,9 @@ export default function App() {
                         <div id="hero-content" className="w-full max-w-screen-2xl mx-auto px-4">
                             <div className="grid md:grid-cols-5 gap-8 items-center">
                                 <div className="md:col-span-3 text-center md:text-left md:-mt-4">
-                                    <h1 className="text-5xl md:text-7xl font-bold fade-in-up reveal"><span className="accent-green">Akshat Parikh</span></h1>
+                                    <h1 className="text-4xl md:text-6xl font-bold fade-in-up reveal"><span className="accent-green">Akshat Parikh</span></h1>
                                     <p className="mt-4 text-xl md:text-2xl text-text-secondary fade-in-up reveal delay-1">Penetration Tester & Security Consultant</p>
-                                    <p className="mt-6 text-text-secondary md:text-lg fade-in-up reveal delay-2">With over a year of hands-on experience in professional penetration testing, I specialize in securing web applications, networks, and cloud infrastructure. My approach is built on a strong foundation in offensive security, simulating the same tactics real-world attackers use to uncover critical risks. I deliver comprehensive security assessments that go far beyond automated scans. My engagement concludes with a professional, actionable report, detailing prioritized vulnerabilities and providing clear remediation guidance to help your team secure your assets and protect customer data.</p>
+                                    <p className="mt-6 text-text-secondary md:text-lg fade-in-up reveal delay-2">With nearly 2 years of hands-on experience in professional penetration testing, I specialize in securing web applications, networks, and cloud infrastructure. My approach is built on a strong foundation in offensive security, simulating the same tactics real-world attackers use to uncover critical risks. I deliver comprehensive security assessments that go far beyond automated scans. My engagement concludes with a professional, actionable report, detailing prioritized vulnerabilities and providing clear remediation guidance to help your team secure your assets and protect customer data.</p>
                                 </div>
                                 <div className="hidden md:col-span-2 md:flex justify-center p-4">
                                     <div className="flex flex-col items-center gap-2 reveal delay-3 md:ml-16">
@@ -1529,6 +1564,45 @@ export default function App() {
                     </div>
                 </section>
                
+                {/* --- "ABOUT ME" SECTION --- */}
+                <section id="about" ref={sectionRefs.about} className="py-24 w-full bg-card-bg border-y border-border-color">
+                    <div className="container mx-auto px-6">
+                        {/* Changed grid-cols-5 to grid-cols-3. Changed col-span-2 to col-span-1 for photo. Changed col-span-3 to col-span-2 for text. */}
+                        <div className="grid md:grid-cols-3 gap-12 items-center">
+                            {/* --- PHOTO COLUMN --- */}
+                            <div className="md:col-span-1 reveal flex justify-center items-center">
+                                {/* --- NEW CUSTOM PHOTO FRAME --- */}
+                                <div className="photo-frame">
+                                    <img 
+                                        src={akshatPhotoJpg} // Use variable here
+                                        alt="Akshat Parikh" 
+                                        // All styling is now handled by the .photo-frame CSS
+                                    />
+                                </div>
+                            </div>
+
+                            {/* --- TEXT COLUMN --- */}
+                            <div className="md:col-span-2 reveal delay-1 text-center md:text-left">
+                                <h2 className="text-4xl font-bold mb-6">
+                                    About <span className="accent-green">Me</span>
+                                </h2>
+                                <div className="space-y-4 text-text-secondary text-lg">
+                                    <p>
+                                        Hello! I'm Akshat. My journey into cybersecurity started with a simple curiosity for how things work and, more importantly, how they can be broken. This passion evolved into a professional focus, and today I specialize primarily in web application penetration testing.
+                                    </p>
+                                    <p>
+                                        While I'm deeply technical, my goal isn't just to find vulnerabilities. It's to partner with businesses to build a stronger, more resilient security culture. I believe in clear communication and providing practical solutions that help your team understand the "why" behind every finding.
+                                    </p>
+                                    <p className="text-text-primary font-semibold">
+                                        When you work with me, you're not just hiring a pentester; you're gaining a dedicated security partner.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* --- END "ABOUT ME" SECTION --- */}
+               
                 <section id="process" ref={sectionRefs.process} className="py-24 w-full">
                     <div className="container mx-auto px-6">
                          <div className="text-center mb-16 reveal">
@@ -1674,15 +1748,93 @@ export default function App() {
                 <section id="experience" ref={sectionRefs.experience} className="py-24 w-full">
                     <div className="container mx-auto px-6">
                         <div className="text-center mb-12 reveal"><h2 className="text-4xl font-bold">Experience <span className="accent-green">& Education</span></h2><p className="mt-4 max-w-2xl mx-auto text-text-secondary">A track record of successful security assessments and continuous learning in cybersecurity.</p></div>
-                        <div className="grid lg:grid-cols-3 gap-8">
+                        {/*
+                          I've removed the "lg:grid-cols-3" here.
+                          This will stack the Experience and Education blocks vertically,
+                          which is a cleaner layout and removes the awkward empty space.
+                        */}
+                        <div className="w-full">
                             <div className="lg:col-span-2 space-y-8">
-                                <div className="styled-card p-8 rounded-lg reveal"><div className="flex flex-col sm:flex-row justify-between items-start mb-2"><div><h3 className="text-xl font-bold">Penetration Tester</h3><p className="accent-green font-medium">Opal Omniventures Pvt. Ltd.</p></div><p className="text-sm text-text-secondary whitespace-nowrap mt-2 sm:mt-0">July 2023 - March 2024</p></div><p className="text-text-secondary mb-4">Leading comprehensive security assessments and collaborating with external partners on penetration testing engagements.</p><p className="font-semibold mb-2">Key Achievements:</p><ul className="space-y-2 text-sm text-text-secondary"><li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Collaborated with external partners on security initiatives for joint penetration testing engagements.</span></li><li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Executed targeted phishing simulations to test employee susceptibility and improve security awareness.</span></li><li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Performed advanced web application penetration testing using Burp Suite, OWASP ZAP, and Nessus.</span></li></ul></div>
-                                <div className="styled-card p-8 rounded-lg reveal"><div className="flex flex-col sm:flex-row justify-between items-start mb-2"><div><h3 className="text-xl font-bold">Penetration Tester</h3><p className="accent-green font-medium">MCS Ventures</p></div><p className="text-sm text-text-secondary whitespace-nowrap mt-2 sm:mt-0">Jan 2023 - July 2023</p></div><p className="text-text-secondary mb-4">Specialized in vulnerability assessments and manual penetration testing on web applications and network systems.</p><p className="font-semibold mb-2">Key Achievements:</p><ul className="space-y-2 text-sm text-text-secondary"><li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Conducted comprehensive vulnerability assessments on web applications and network systems.</span></li><li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Executed manual penetration tests using OWASP ZAP, Burp Suite, and Nessus.</span></li></ul></div>
+                                <div className="styled-card p-8 rounded-lg reveal">
+                                    <div className="flex flex-col sm:flex-row justify-between items-start mb-2">
+                                        <div>
+                                            <h3 className="text-xl font-bold">Freelance Penetration Tester/Security Consultant</h3>
+                                            <p className="accent-green font-medium">Contract</p>
+                                        </div>
+                                        <p className="text-sm text-text-secondary whitespace-nowrap mt-2 sm:mt-0">March 2025 – Present</p>
+                                    </div>
+                                    <p className="font-semibold mb-2">Key Achievements:</p>
+                                    <ul className="space-y-2 text-sm text-text-secondary">
+                                        <li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Assessed the security posture for 2 companies, identifying and reporting over 8 distinct vulnerabilities across web application and network environments.</span></li>
+                                        <li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Uncovered and helped remediate 3 critical-risk vulnerabilities, including Broken Access Control and Security Misconfiguration, leading to immediate and significant security upgrades for clients.</span></li>
+                                        <li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Delivered clear and actionable reports detailing findings, business impact, and strategic recommendations that enabled technical teams to quickly patch vulnerabilities.</span></li>
+                                    </ul>
+                                </div>
+                                <div className="styled-card p-8 rounded-lg reveal">
+                                    {/* This card is now a grid to hold the logo */}
+                                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                                        <div className="md:col-span-3"> {/* Text content */}
+                                            <div className="flex flex-col sm:flex-row justify-between items-start mb-2">
+                                                <div>
+                                                    <h3 className="text-xl font-bold">Penetration Tester</h3>
+                                                    <p className="accent-green font-medium">Opal Omniventures Pvt. Ltd. | Internship</p>
+                                                </div>
+                                                <p className="text-sm text-text-secondary whitespace-nowrap mt-2 sm:mt-0">July 2024 – March 2025</p>
+                                            </div>
+                                            <p className="font-semibold mb-2">Key Achievements:</p>
+                                            <ul className="space-y-2 text-sm text-text-secondary">
+                                                <li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Reduced employee susceptibility to phishing by over 70% by leading targeted phishing campaigns for teams of 50-150, reducing the average click-rate from over 25% down to under 10%.</span></li>
+                                                <li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Served as the sole penetration tester across 3 separate partnered companies, providing detailed vulnerability findings to help improve their security.</span></li>
+                                                <li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Conducted 2 in-depth vulnerability assessments, identifying vulnerabilities including SQL injection and a critical file upload flaw that could have led to remote code execution, thereby preventing a major security breach.</span></li>
+                                            </ul>
+                                        </div>
+                                        <div className="md:col-span-1 flex items-center justify-center"> {/* Logo content */}
+                                            <img 
+                                                src={opalLogo} // This uses the 'opalLogo' const/import from the top
+                                                alt="Opal Omniventures Logo" 
+                                                className="rounded-lg w-40 h-auto"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="styled-card p-8 rounded-lg reveal">
+                                    {/* This card is also a grid now */}
+                                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                                        <div className="md:col-span-3"> {/* Text content */}
+                                            <div className="flex flex-col sm:flex-row justify-between items-start mb-2">
+                                                <div>
+                                                    <h3 className="text-xl font-bold">Penetration Tester</h3>
+                                                    <p className="accent-green font-medium">MCS Ventures | Internship</p>
+                                                </div>
+                                                <p className="text-sm text-text-secondary whitespace-nowrap mt-2 sm:mt-0">January 2024 – July 2024</p>
+                                            </div>
+                                            <p className="font-semibold mb-2">Key Achievements:</p>
+                                            <ul className="space-y-2 text-sm text-text-secondary">
+                                                <li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Identified 2 high-impact vulnerabilities, including Cross-Site Scripting (XSS) and SQL Injection, which could have led to the widespread exposure of sensitive customer data.</span></li>
+                                                <li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Strengthened network security by identifying and reporting the use of weak default credentials on a core system, eliminating a key entry point for attackers.</span></li>
+                                                <li className="flex items-start"><ArrowRight className="w-4 h-4 mr-2 mt-1 accent-green flex-shrink-0" /><span>Delivered over 10 security reports tailored for both technical and executive teams to document all findings, providing clear, actionable guides to help developers patch any identified vulnerabilities.</span></li>
+                                            </ul>
+                                        </div>
+                                        <div className="md:col-span-1 flex items-center justify-center"> {/* Logo content */}
+                                            <img 
+                                                src={mcsLogo} // This uses the 'mcsLogo' const/import from the top
+                                                alt="MCS Ventures Logo" 
+                                                className="rounded-lg w-40 h-auto bg-[var(--dark-bg)] border border-[var(--border-color)]"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="space-y-8">
+                            {/* Added mt-16 for spacing between the two sections */}
+                            <div className="space-y-8 mt-16">
                                 <div className="reveal">
                                     <h3 className="text-2xl font-bold mb-4 flex items-center gap-3"><GraduationCap className="w-8 h-8 accent-green" />Education</h3>
-                                    <div className="space-y-6">
+                                    {/*
+                                      I'm changing "space-y-6" to a grid.
+                                      This will place the two education cards side-by-side on larger screens,
+                                      which looks more balanced in this new stacked layout.
+                                    */}
+                                    <div className="grid md:grid-cols-2 gap-6">
                                         <div className="education-card p-6 rounded-lg"><h4 className="font-bold text-lg">Bachelor's in ICT Engineering</h4><p className="text-sm accent-green">LJIET</p><div className="text-sm text-text-secondary mt-2 space-y-1"><p className="flex items-center gap-2"><Calendar className="w-4 h-4" />2021 - 2024</p><p className="flex items-center gap-2"><span className="font-semibold accent-green">Grade:</span> 7.87 CGPA</p></div><ul className="text-sm text-text-secondary mt-3 space-y-1 list-disc list-inside"><li>Strong foundation in cybersecurity concepts</li><li>Networking and system administration</li><li>Software development and programming</li></ul></div>
                                         <div className="education-card p-6 rounded-lg"><h4 className="font-bold text-lg">Diploma in Computer Engineering</h4><p className="text-sm accent-green">RCTI</p><div className="text-sm text-text-secondary mt-2 space-y-1"><p className="flex items-center gap-2"><Calendar className="w-4 h-4" />2018 - 2021</p><p className="flex items-center gap-2"><span className="font-semibold accent-green">Grade:</span> 7.88 CGPA</p></div><ul className="text-sm text-text-secondary mt-3 space-y-1 list-disc list-inside"><li>Computer systems fundamentals</li><li>Network protocols and security</li><li>Programming and database management</li></ul></div>
                                     </div>
@@ -1754,7 +1906,7 @@ export default function App() {
                         </div>
                     </div>
                 </section>
-
+               
                 <section id="achievements" ref={sectionRefs.achievements} className="py-24 w-full">
                     <div className="container mx-auto px-6">
                         <div className="text-center mb-12 reveal"><h2 className="text-4xl font-bold">Notable <span className="accent-green">Achievements</span></h2><p className="mt-4 max-w-2xl mx-auto text-text-secondary">Recognition and accomplishments in cybersecurity competitions and professional development.</p></div>
@@ -1814,7 +1966,18 @@ export default function App() {
                 <div className="container mx-auto px-6 py-12">
                     <div className="grid md:grid-cols-3 gap-10 text-center md:text-left">
                         <div className="md:col-span-1"><h3 className="text-xl font-bold accent-green">Akshat Parikh</h3><p className="text-sm text-text-secondary mt-4">Professional penetration tester specializing in web application security. Committed to ethical hacking and helping organizations strengthen their cybersecurity posture.</p><div className="mt-6 flex gap-4 justify-center md:justify-start"><a href="/Akshat Parikh Resume.pdf" download="Akshat Parikh Resume.pdf" className="btn btn-secondary px-4 py-2 rounded-lg flex items-center space-x-2 text-sm"><Download className="w-4 h-4" /><span>Download Resume</span></a><a href="/Penetration Testing Services Brochure - Akshat Parikh.pdf" download="Penetration Testing Services Brochure - Akshat Parikh.pdf" className="btn btn-secondary px-4 py-2 rounded-lg flex items-center space-x-2 text-sm"><Book className="w-4 h-4" /><span>Service Brochure</span></a></div></div>
-                        <div><h3 className="text-lg font-bold">Quick Links</h3><div className="grid grid-cols-2 gap-2 mt-4 text-sm"><ul className="space-y-2"><li><a href="#home" onClick={(e) => handleNavLinkClick(e, 'home')} className="text-text-secondary hover:text-white">Home</a></li><li><a href="#services" onClick={(e) => handleNavLinkClick(e, 'services')} className="text-text-secondary hover:text-white">Services</a></li><li><a href="#process" onClick={(e) => handleNavLinkClick(e, 'process')} className="text-text-secondary hover:text-white">Process</a></li><li><a href="#experience" onClick={(e) => handleNavLinkClick(e, 'experience')} className="text-text-secondary hover:text-white">Experience</a></li></ul><ul className="space-y-2"><li><a href="#certifications" onClick={(e) => handleNavLinkClick(e, 'certifications')} className="text-text-secondary hover:text-white">Certifications</a></li><li><a href="#achievements" onClick={(e) => handleNavLinkClick(e, 'achievements')} className="text-text-secondary hover:text-white">Achievements</a></li><li><a href="#faqs" onClick={(e) => handleNavLinkClick(e, 'faqs')} className="text-text-secondary hover:text-white">FAQs</a></li><li><a href="#contact" onClick={(e) => handleNavLinkClick(e, 'contact')} className="text-text-secondary hover:text-white">Contact</a></li></ul></div></div>
+                        <div><h3 className="text-lg font-bold">Quick Links</h3><div className="grid grid-cols-2 gap-2 mt-4 text-sm"><ul className="space-y-2">
+                                <li><a href="#home" onClick={(e) => handleNavLinkClick(e, 'home')} className="text-text-secondary hover:text-white">Home</a></li>
+                                <li><a href="#services" onClick={(e) => handleNavLinkClick(e, 'services')} className="text-text-secondary hover:text-white">Services</a></li>
+                                <li><a href="#about" onClick={(e) => handleNavLinkClick(e, 'about')} className="text-text-secondary hover:text-white">About</a></li>
+                                <li><a href="#process" onClick={(e) => handleNavLinkClick(e, 'process')} className="text-text-secondary hover:text-white">Process</a></li>
+                                <li><a href="#experience" onClick={(e) => handleNavLinkClick(e, 'experience')} className="text-text-secondary hover:text-white">Experience</a></li>
+                            </ul><ul className="space-y-2">
+                                <li><a href="#certifications" onClick={(e) => handleNavLinkClick(e, 'certifications')} className="text-text-secondary hover:text-white">Certifications</a></li>
+                                <li><a href="#achievements" onClick={(e) => handleNavLinkClick(e, 'achievements')} className="text-text-secondary hover:text-white">Achievements</a></li>
+                                <li><a href="#faqs" onClick={(e) => handleNavLinkClick(e, 'faqs')} className="text-text-secondary hover:text-white">FAQs</a></li>
+                                <li><a href="#contact" onClick={(e) => handleNavLinkClick(e, 'contact')} className="text-text-secondary hover:text-white">Contact</a></li>
+                            </ul></div></div>
                         <div><h3 className="text-lg font-bold">Connect</h3><div className="flex space-x-3 mt-4 justify-center md:justify-start"><a href="mailto:akshatparikh.pt@gmail.com" className="footer-icon" aria-label="Email"><Mail className="w-5 h-5" /></a><a href="https://www.linkedin.com/in/akshatparikh-pt/" target="_blank" rel="noopener noreferrer" className="footer-icon" aria-label="LinkedIn"><Linkedin className="w-5 h-5" /></a><a href="https://tryhackme.com/p/SN1PER" target="_blank" rel="noopener noreferrer" className="footer-icon" aria-label="TryHackMe"><img src={tryhackmeLogoPng} alt="TryHackMe" className="w-5 h-5" /></a><a href="https://app.hackthebox.com/users/475852" target="_blank" rel="noopener noreferrer" className="footer-icon" aria-label="HackTheBox"><Box className="w-5 h-5" /></a></div><div className="mt-6 text-sm space-y-2"><p className="text-text-secondary">TryHackMe: <span className="accent-green font-semibold">Top 0.1%</span></p><p className="text-text-secondary">HackTheBox: <span className="accent-green font-semibold">Pro Hacker</span></p></div></div>
                     </div>
                     <div className="mt-12 border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
@@ -1885,4 +2048,3 @@ const FAQItem = ({ q, a }) => {
         </div>
     );
 };
-
